@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Reservation System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-5">
+    <div class="w-full max-w-2xl mx-auto">
+        <!-- Navigation Buttons -->
+        <div class="flex justify-around mb-6">
+            <button onclick="showSection('addTrainSection')" class="bg-blue-500 text-white py-2 px-4 rounded">Add Train</button>
+            <button onclick="showSection('bookTicketSection')" class="bg-blue-500 text-white py-2 px-4 rounded">Book Ticket</button>
+            <button onclick="showSection('cancelTicketSection')" class="bg-blue-500 text-white py-2 px-4 rounded">Cancel Ticket</button>
+        </div>
+
+        <!-- Add Train Section -->
+        <div id="addTrainSection" class="bg-white p-6 rounded-lg shadow-lg mb-6 hidden">
+            <h1 class="text-2xl font-semibold text-center text-blue-600 mb-4">Add Train</h1>
+            <form id="trainForm">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="trainNo" class="block text-gray-700 font-bold mb-2">Train No:</label>
+                        <input type="text" id="trainNo" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                    </div>
+                    <div>
+                        <label for="trainName" class="block text-gray-700 font-bold mb-2">Train Name:</label>
+                        <input type="text" id="trainName" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <label for="availableSeats" class="block text-gray-700 font-bold mb-2">Available Seats:</label>
+                        <input type="number" id="availableSeats" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                    </div>
+                    <div>
+                        <label for="ticketPrice" class="block text-gray-700 font-bold mb-2">Ticket Price:</label>
+                        <input type="number" id="ticketPrice" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <label for="fromLocation" class="block text-gray-700 font-bold mb-2">From Location:</label>
+                        <input type="text" id="fromLocation" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                    </div>
+                    <div>
+                        <label for="toLocation" class="block text-gray-700 font-bold mb-2">To Location:</label>
+                        <input type="text" id="toLocation" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <label for="arrivalTime" class="block text-gray-700 font-bold mb-2">Arrival Time:</label>
+                        <input type="time" id="arrivalTime" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                    </div>
+                    <div>
+                        <label for="departureTime" class="block text-gray-700 font-bold mb-2">Departure Time:</label>
+                        <input type="time" id="departureTime" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                    </div>
+                </div>
+                <button type="submit" class="mt-6 w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">Add Train</button>
+            </form>
+            <div class="message text-green-600 text-center mt-4" id="message"></div>
+            <div class="error text-red-600 text-center mt-4" id="errorMessage"></div>
+        </div>
+
+        <!-- Book Ticket Section -->
+        <div id="bookTicketSection" class="bg-white p-6 rounded-lg shadow-lg mb-6 hidden">
+            <h2 class="text-xl font-semibold text-center text-blue-600 mb-4">Book a Ticket</h2>
+            <form id="bookForm">
+                <div class="mb-4">
+                    <label for="bookTrainNo" class="block text-gray-700 font-bold mb-2">Train No:</label>
+                    <input type="text" id="bookTrainNo" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                </div>
+                <div class="mb-4">
+                    <label for="passengerName" class="block text-gray-700 font-bold mb-2">Passenger Name:</label>
+                    <input type="text" id="passengerName" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">Book Ticket</button>
+            </form>
+            <div class="message text-green-600 text-center mt-4" id="bookMessage"></div>
+            <div class="error text-red-600 text-center mt-4" id="bookErrorMessage"></div>
+        </div>
+
+        <!-- Cancel Ticket Section -->
+        <div id="cancelTicketSection" class="bg-white p-6 rounded-lg shadow-lg hidden">
+            <h2 class="text-xl font-semibold text-center text-blue-600 mb-4">Cancel a Ticket</h2>
+            <form id="cancelForm">
+                <div class="mb-4">
+                    <label for="cancelTrainNo" class="block text-gray-700 font-bold mb-2">Train No:</label>
+                    <input type="text" id="cancelTrainNo" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                </div>
+                <div class="mb-4">
+                    <label for="passengerNameCancel" class="block text-gray-700 font-bold mb-2">Passenger Name:</label>
+                    <input type="text" id="passengerNameCancel" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">Cancel Ticket</button>
+            </form>
+            <div class="message text-green-600 text-center mt-4" id="cancelMessage"></div>
+            <div class="error text-red-600 text-center mt-4" id="cancelErrorMessage"></div>
+        </div>
+    </div>
+
+    <script>
+        // Function to show the selected section
+        function showSection(sectionId) {
+            document.getElementById('addTrainSection').classList.add('hidden');
+            document.getElementById('bookTicketSection').classList.add('hidden');
+            document.getElementById('cancelTicketSection').classList.add('hidden');
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        // Helper function to clear messages
+        function clearMessages() {
+            document.getElementById('message').textContent = '';
+            document.getElementById('errorMessage').textContent = '';
+            document.getElementById('bookMessage').textContent = '';
+            document.getElementById('bookErrorMessage').textContent = '';
+            document.getElementById('cancelMessage').textContent = '';
+            document.getElementById('cancelErrorMessage').textContent = '';
+        }
+
+        // Add Train
+        document.getElementById('trainForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            clearMessages();
+
+            const trainData = {
+                trainNo: document.getElementById('trainNo').value,
+                trainName: document.getElementById('trainName').value,
+                availableSeats: document.getElementById('availableSeats').value,
+                ticketPrice: document.getElementById('ticketPrice').value,
+                fromLocation: document.getElementById('fromLocation').value,
+                toLocation: document.getElementById('toLocation').value,
+                arrivalTime: document.getElementById('arrivalTime').value,
+                departureTime: document.getElementById('departureTime').value,
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/addTrain', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(trainData)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    document.getElementById('message').textContent = 'Train added successfully!';
+                    document.getElementById('trainForm').reset();
+                } else {
+                    document.getElementById('errorMessage').textContent = result.error || 'Failed to add train.';
+                }
+            } catch (err) {
+                document.getElementById('errorMessage').textContent = 'Server error. Please try again later.';
+            }
+        });
+
+        // Book Ticket
+        document.getElementById('bookForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            clearMessages();
+
+            const bookingData = {
+                trainNo: document.getElementById('bookTrainNo').value,
+                passengerName: document.getElementById('passengerName').value,
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/bookTicket', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bookingData)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    document.getElementById('bookMessage').textContent = 'Ticket booked successfully!';
+                    document.getElementById('bookForm').reset();
+                } else {
+                    document.getElementById('bookErrorMessage').textContent = result.error || 'Failed to book ticket.';
+                }
+            } catch (err) {
+                document.getElementById('bookErrorMessage').textContent = 'Server error. Please try again later.';
+            }
+        });
+
+        // Cancel Ticket
+        document.getElementById('cancelForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            clearMessages();
+
+            const cancelData = {
+                trainNo: document.getElementById('cancelTrainNo').value,
+                passengerName: document.getElementById('passengerNameCancel').value,
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/cancelTicket', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(cancelData)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    document.getElementById('cancelMessage').textContent = 'Ticket cancelled successfully!';
+                    document.getElementById('cancelForm').reset();
+                } else {
+                    document.getElementById('cancelErrorMessage').textContent = result.error || 'Failed to cancel ticket.';
+                }
+            } catch (err) {
+                document.getElementById('cancelErrorMessage').textContent = 'Server error. Please try again later.';
+            }
+        });
+    </script>
+</body>
+</html>
